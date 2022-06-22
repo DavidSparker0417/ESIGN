@@ -6,12 +6,24 @@ import { Document, Page } from "react-pdf";
 import { pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
+const DocWrapper = styled(Box)(() => {
+  return {
+    canvas: {
+      width: "100%!important",
+      height: "auto!important"
+    },
+    ".react-pdf__Page__textContent" : {
+      width: "100%!important",
+      overflow: "hidden!important"
+    }
+  };
+});
+
 export default function PDFViewer({ pdf }) {
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   function onDocumentLoadSuccess({ numPages }) {
-    console.log("[PDF] document load success :: pages = ", numPages);
     setTotalPages(numPages);
   }
 
@@ -28,9 +40,11 @@ export default function PDFViewer({ pdf }) {
       alignItems="center"
     >
       {pdf && (
-        <Document file={pdf.url} onLoadSuccess={onDocumentLoadSuccess}>
-          <Page pageNumber={currentPage} />
-        </Document>
+        <DocWrapper>
+          <Document file={pdf.url} onLoadSuccess={onDocumentLoadSuccess}>
+            <Page pageNumber={currentPage} />
+          </Document>
+        </DocWrapper>
       )}
       <Grid container alignItems="center">
         <Grid item xs={3} pl={2} overflow="hidden">
