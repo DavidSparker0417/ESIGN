@@ -32,7 +32,7 @@ export const Container = styled.div`
 
 export const Header = styled.header`
   align-items: center;
-  background-color: #282c34;
+  background-color: #00A3E8;
   color: white;
   display: flex;
   flex-direction: row;
